@@ -48,13 +48,12 @@ object GenerateLogData:
     val bucket: String = config.getString("s3config.bucket")
     val path: String = config.getString("s3config.file_path")
     val key: String = config.getString("s3config.key")
-	val date: String = config.getString("s3config.date")
-  
+    val date: String = config.getString("s3config.date")
+    
     val s3: AmazonS3 = AmazonS3ClientBuilder.standard.withRegion(Regions.US_EAST_2).build
     try s3.putObject(bucket, key +date +".log", new File(path))
-	
-	catch {
-		case e: AmazonServiceException =>
-		  System.err.println(e)
-		  System.exit(1)
-	  }
+    catch {
+      case e: AmazonServiceException =>
+        System.err.println(e)
+        System.exit(1)
+      }
